@@ -6,11 +6,12 @@ chrome.runtime.onMessage.addListener(request => {
   }
 );
 
+setTimeout(() => {
 setInterval(deleteMsg, 200);
 
 function deleteMsg() {
   const posts = blackList.reduce((acc, cur) => [...acc, ...document.querySelectorAll(`span[data-a-user="${cur.toLowerCase()}"]`)], []);
-
+console.log(posts);
   posts.map(post => {
     let c1 = c2 = "";
     while (!(c1 || c2)) {
@@ -21,7 +22,7 @@ function deleteMsg() {
     post.remove();
   });
 }
-
+}, 5000);
 
 
 
