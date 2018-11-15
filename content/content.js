@@ -2,7 +2,7 @@ let blackList = [];
 
 chrome.runtime.onMessage.addListener(request => {
   	blackList = request.message;
-    console.log(blackList);
+//    console.log(blackList);
   }
 );
 
@@ -12,7 +12,12 @@ function deleteMsg() {
   const posts = blackList.reduce((acc, cur) => [...acc, ...document.querySelectorAll(`span[data-a-user="${cur.toLowerCase()}"]`)], []);
 
   posts.map(post => {
-    while (!(post.tagName === "LI" && post.className === "tw-full-width")) post = post.parentElement;
+    let c1 = c2 = "";
+    while (!(c1 || c2)) {
+      post = post.parentElement;
+      c1 = post.tagName === "LI" && post.className === "tw-full-width";
+      c2 = post.tagName === "DIV" && post.className === "chat-line__message";
+    }
     post.remove();
   });
 }
